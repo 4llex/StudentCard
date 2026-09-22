@@ -94,28 +94,38 @@ class ValidacaoQrFragment : Fragment() {
 
         val partes = conteudo.split("|")
 
-        if (partes.size != 3) {
+        if (partes.size != 5) {
             mostrarQrInvalido()
             return
         }
 
         val status = partes[0]
 
-        val matricula = partes[1]
+        val nome = partes[1]
+            .removePrefix("NOME=")
+
+        val matricula = partes[2]
             .removePrefix("RA=")
 
-        val curso = partes[2]
+        val curso = partes[3]
             .removePrefix("CURSO=")
+
+        val instituicao = partes[4]
+            .removePrefix("INSTITUICAO=")
 
         if (
             status == "VALIDO" &&
+            nome.isNotBlank() &&
             matricula.isNotBlank() &&
-            curso.isNotBlank()
+            curso.isNotBlank() &&
+            instituicao.isNotBlank()
         ) {
 
             mostrarQrValido(
+                nome,
                 matricula,
-                curso
+                curso,
+                instituicao
             )
 
         } else {
@@ -125,8 +135,10 @@ class ValidacaoQrFragment : Fragment() {
     }
 
     private fun mostrarQrValido(
+        nome: String,
         matricula: String,
-        curso: String
+        curso: String,
+        instituicao: String
     ) {
 
         binding.textStatusScanner.text =
@@ -137,13 +149,13 @@ class ValidacaoQrFragment : Fragment() {
 
         binding.textDadosEstudante.text =
             """
-        Nome: Alex Rafael Silva Rosa
+        Nome: $nome
         
         Matrícula: $matricula
         
         Curso: $curso
         
-        Instituição: INATEL
+        Instituição: $instituicao
         """.trimIndent()
     }
 

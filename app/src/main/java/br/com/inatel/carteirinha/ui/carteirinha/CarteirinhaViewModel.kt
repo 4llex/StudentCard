@@ -18,7 +18,12 @@ class CarteirinhaViewModel : ViewModel() {
     )
 
     val qrCodeConteudo: String
-        get() = "VALIDO|RA=${estudante.matricula}|CURSO=${estudante.curso}"
+        get() =
+            "VALIDO" +
+                    "|NOME=${estudante.nome}" +
+                    "|RA=${estudante.matricula}" +
+                    "|CURSO=${estudante.curso}" +
+                    "|INSTITUICAO=${estudante.instituicao}"
 
     private fun calcularValidade(): String {
         val calendario = Calendar.getInstance()

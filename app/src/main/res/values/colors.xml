@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Cores institucionais -->
+    <color name="inatel_blue">#0056A4</color>
+    <color name="inatel_dark_blue">#003F78</color>
+
+    <!-- Cores de interface -->
+    <color name="background_light">#F4F6F9</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#667085</color>
+
+    <!-- Navegação -->
+    <color name="bottom_nav_color">#0056A4</color>
+
+    <!-- Cores auxiliares -->
+    <color name="white">#FFFFFF</color>
+
+</resources>

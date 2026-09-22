@@ -1,0 +1,46 @@
+# Built artifacts
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (contains local paths to SDK, keys, etc.)
+local.properties
+
+# Log files
+*.log
+
+# Android Studio / IntelliJ IDEA string files
+.idea/
+
+# Keystore files (NEVER commit your production keys)
+*.jks
+*.keystore
+*.pk8
+*.p12
+
+# Device scans and captures
+captures/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# NDK
+.cxx/
+.externalNativeBuild/

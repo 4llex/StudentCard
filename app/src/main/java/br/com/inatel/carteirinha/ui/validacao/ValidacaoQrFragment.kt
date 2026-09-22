@@ -90,17 +90,73 @@ class ValidacaoQrFragment : Fragment() {
 
         binding.barcodeView.pause()
 
-        binding.textStatusScanner.text =
-            "QR Code lido com sucesso!"
+        binding.cardResultado.visibility = View.VISIBLE
 
-        binding.cardResultado.visibility =
-            View.VISIBLE
+        val partes = conteudo.split("|")
+
+        if (partes.size != 3) {
+            mostrarQrInvalido()
+            return
+        }
+
+        val status = partes[0]
+
+        val matricula = partes[1]
+            .removePrefix("RA=")
+
+        val curso = partes[2]
+            .removePrefix("CURSO=")
+
+        if (
+            status == "VALIDO" &&
+            matricula.isNotBlank() &&
+            curso.isNotBlank()
+        ) {
+
+            mostrarQrValido(
+                matricula,
+                curso
+            )
+
+        } else {
+
+            mostrarQrInvalido()
+        }
+    }
+
+    private fun mostrarQrValido(
+        matricula: String,
+        curso: String
+    ) {
+
+        binding.textStatusScanner.text =
+            "QR Code validado com sucesso!"
 
         binding.textResultado.text =
-            "QR Code detectado"
+            "✓ Carteirinha válida"
 
         binding.textDadosEstudante.text =
-            conteudo
+            """
+        Nome: Alex Rafael Silva Rosa
+        
+        Matrícula: $matricula
+        
+        Curso: $curso
+        
+        Instituição: INATEL
+        """.trimIndent()
+    }
+
+    private fun mostrarQrInvalido() {
+
+        binding.textStatusScanner.text =
+            "Não foi possível validar o QR Code."
+
+        binding.textResultado.text =
+            "✕ Carteirinha inválida"
+
+        binding.textDadosEstudante.text =
+            "O QR Code não possui um formato válido."
     }
 
     override fun onResume() {

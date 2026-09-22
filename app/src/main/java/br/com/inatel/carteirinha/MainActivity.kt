@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.drawer_validar_qr -> {
-                    // Vamos implementar na próxima etapa.
+                    navegarPara(R.id.navigation_validacao_qr)
                 }
 
                 R.id.drawer_configuracoes -> {

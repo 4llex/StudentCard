@@ -6,12 +6,41 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import br.com.inatel.carteirinha.databinding.FragmentValidacaoQrBinding
-import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.ResultPoint
+import com.journeyapps.barcodescanner.BarcodeCallback
+import com.journeyapps.barcodescanner.BarcodeResult
 
 class ValidacaoQrFragment : Fragment() {
 
     private var _binding: FragmentValidacaoQrBinding? = null
     private val binding get() = _binding!!
+
+    private var qrDetectado = false
+
+    private val barcodeCallback = object : BarcodeCallback {
+
+        override fun barcodeResult(result: BarcodeResult?) {
+
+            if (result == null || qrDetectado) {
+                return
+            }
+
+            val conteudo = result.text ?: return
+
+            qrDetectado = true
+
+            requireActivity().runOnUiThread {
+                processarQrCode(conteudo)
+            }
+        }
+
+        override fun possibleResultPoints(
+            resultPoints: MutableList<ResultPoint>?
+        ) {
+            // Não precisamos tratar os pontos neste momento.
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,55 +63,66 @@ class ValidacaoQrFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonLerQrCode.setOnClickListener {
-            iniciarScanner()
-        }
+        iniciarScanner()
     }
 
     private fun iniciarScanner() {
 
-        IntentIntegrator.forSupportFragment(this)
-            .setDesiredBarcodeFormats(
-                IntentIntegrator.QR_CODE
-            )
-            .setPrompt(
-                "Aponte a câmera para o QR Code da carteirinha"
-            )
-            .setBeepEnabled(true)
-            .setOrientationLocked(false)
-            .initiateScan()
-    }
+        qrDetectado = false
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: android.content.Intent?
-    ) {
-        super.onActivityResult(
-            requestCode,
-            resultCode,
-            data
+        binding.textStatusScanner.text =
+            "Aponte a câmera para o QR Code..."
+
+        binding.barcodeView.barcodeView.setDecoderFactory(
+            com.journeyapps.barcodescanner.DefaultDecoderFactory(
+                listOf(BarcodeFormat.QR_CODE)
+            )
         )
 
-        val resultado =
-            IntentIntegrator.parseActivityResult(
-                requestCode,
-                resultCode,
-                data
-            )
+        binding.barcodeView.decodeContinuous(
+            barcodeCallback
+        )
 
-        if (resultado != null) {
+        binding.barcodeView.resume()
+    }
 
-            val conteudo = resultado.contents
+    private fun processarQrCode(conteudo: String) {
 
-            if (conteudo != null) {
-                binding.buttonLerQrCode.text =
-                    "QR Code lido"
-            }
+        binding.barcodeView.pause()
+
+        binding.textStatusScanner.text =
+            "QR Code lido com sucesso!"
+
+        binding.cardResultado.visibility =
+            View.VISIBLE
+
+        binding.textResultado.text =
+            "QR Code detectado"
+
+        binding.textDadosEstudante.text =
+            conteudo
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (_binding != null && !qrDetectado) {
+            binding.barcodeView.resume()
         }
     }
 
+    override fun onPause() {
+
+        if (_binding != null) {
+            binding.barcodeView.pause()
+        }
+
+        super.onPause()
+    }
+
     override fun onDestroyView() {
+        binding.barcodeView.pause()
+
         super.onDestroyView()
         _binding = null
     }

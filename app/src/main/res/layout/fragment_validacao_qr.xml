@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="@dimen/spacing_large">
+                android:padding="@dimen/spacing_medium">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,19 +57,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:gravity="center"
-                    android:text="Aponte a câmera para o QR Code apresentado na carteirinha."
+                    android:text="Aponte a câmera para o QR Code da carteirinha."
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonLerQrCode"
+                <com.journeyapps.barcodescanner.DecoratedBarcodeView
+                    android:id="@+id/barcodeView"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_marginTop="@dimen/spacing_medium" />
+
+                <TextView
+                    android:id="@+id/textStatusScanner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_large"
-                    android:text="Ler QR Code"
-                    android:textSize="15sp"
-                    app:icon="@android:drawable/ic_menu_camera"
-                    app:iconGravity="textStart" />
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:text="Aguardando QR Code..."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

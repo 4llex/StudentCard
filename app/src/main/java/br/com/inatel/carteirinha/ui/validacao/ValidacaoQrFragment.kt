@@ -145,7 +145,7 @@ class ValidacaoQrFragment : Fragment() {
             "QR Code validado com sucesso!"
 
         binding.textResultado.text =
-            "✓ Carteirinha válida"
+            "Carteirinha válida"
 
         binding.textDadosEstudante.text =
             """
@@ -165,7 +165,7 @@ class ValidacaoQrFragment : Fragment() {
             "Não foi possível validar o QR Code."
 
         binding.textResultado.text =
-            "✕ Carteirinha inválida"
+            "Carteirinha inválida"
 
         binding.textDadosEstudante.text =
             "O QR Code não possui um formato válido."

@@ -1,7 +1,9 @@
 package br.com.inatel.carteirinha
 
 import android.os.Bundle
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import br.com.inatel.carteirinha.databinding.ActivityMainBinding
@@ -9,6 +11,7 @@ import br.com.inatel.carteirinha.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var drawerToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,12 +19,102 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configurarNavegacao()
+        configurarDrawer()
+    }
+
+    private fun configurarNavegacao() {
+
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-                    as NavHostFragment
+            supportFragmentManager.findFragmentById(
+                R.id.nav_host_fragment
+            ) as NavHostFragment
 
         val navController = navHostFragment.navController
 
-        binding.navView.setupWithNavController(navController)
+        binding.navView.setupWithNavController(
+            navController
+        )
+    }
+
+    private fun configurarDrawer() {
+
+        setSupportActionBar(binding.toolbar)
+
+        drawerToggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
+        binding.drawerLayout.addDrawerListener(drawerToggle)
+
+        drawerToggle.syncState()
+
+        binding.navigationView.setNavigationItemSelectedListener { item ->
+
+            when (item.itemId) {
+
+                R.id.drawer_inicio -> {
+                    navegarPara(R.id.navigation_home)
+                }
+
+                R.id.drawer_grade -> {
+                    navegarPara(R.id.navigation_grade)
+                }
+
+                R.id.drawer_carteirinha -> {
+                    navegarPara(R.id.navigation_carteirinha)
+                }
+
+                R.id.drawer_validar_qr -> {
+                    // Vamos implementar na próxima etapa.
+                }
+
+                R.id.drawer_configuracoes -> {
+                    // Futuramente.
+                }
+
+                R.id.drawer_sobre -> {
+                    // Futuramente.
+                }
+            }
+
+            binding.drawerLayout.closeDrawer(
+                GravityCompat.START
+            )
+
+            true
+        }
+    }
+
+    private fun navegarPara(destinationId: Int) {
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(
+                R.id.nav_host_fragment
+            ) as NavHostFragment
+
+        navHostFragment.navController.navigate(
+            destinationId
+        )
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+
+        return if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+
+            binding.drawerLayout.closeDrawer(
+                GravityCompat.START
+            )
+
+            true
+
+        } else {
+
+            super.onSupportNavigateUp()
+        }
     }
 }

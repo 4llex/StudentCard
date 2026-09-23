@@ -19,9 +19,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Carteirinha Digital"
+            android:text="CARTEIRA DE IDENTIFICAÇÃO ESTUDANTIL"
             android:textColor="@color/inatel_dark_blue"
-            android:textSize="26sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="CARTEIRA DE IDENTIFICAÇÃO ESTUDANTIL"
+                        android:text="Instituto Nacional de Telecomunicações"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
@@ -89,35 +89,44 @@
 
                     <!-- Foto -->
 
-                    <FrameLayout
-                        android:layout_width="96dp"
-                        android:layout_height="120dp">
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="116dp"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/inatel_blue"
+                        app:strokeWidth="1dp">
 
-                        <ImageView
-                            android:id="@+id/imageFoto"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/bg_white_card"
-                            android:clickable="true"
-                            android:contentDescription="Foto do estudante. Toque para alterar."
-                            android:focusable="true"
-                            android:scaleType="centerCrop"
-                            android:src="@android:drawable/ic_menu_camera" />
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:background="#99000000"
-                            android:gravity="center"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:text="Alterar"
-                            android:textColor="@color/white"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            <ImageView
+                                android:id="@+id/imageFoto"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:contentDescription="Foto do estudante. Toque para alterar."
+                                android:focusable="true"
+                                android:scaleType="centerCrop"
+                                android:src="@android:drawable/ic_menu_camera" />
 
-                    </FrameLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="#99000000"
+                                android:gravity="center"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:text="Alterar"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
 
 
                     <!-- Dados principais -->

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Carteirinha Inatel</string>
+    <string name="app_name">INATEL</string>
     <string name="navigation_drawer_open">Abrir menu</string>
     <string name="navigation_drawer_close">Fechar menu</string>
 </resources>

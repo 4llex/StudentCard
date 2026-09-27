@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import br.com.inatel.carteirinha.databinding.ActivityMainBinding
@@ -113,9 +114,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_host_fragment
             ) as NavHostFragment
 
-        navHostFragment.navController.navigate(
-            destinationId
-        )
+        val navController = navHostFragment.navController
+
+        val navOptions = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setRestoreState(true)
+            .setPopUpTo(
+                navController.graph.startDestinationId,
+                inclusive = false,
+                saveState = true
+            )
+            .build()
+
+        navController.navigate(destinationId, null, navOptions)
     }
 
     override fun onSupportNavigateUp(): Boolean {

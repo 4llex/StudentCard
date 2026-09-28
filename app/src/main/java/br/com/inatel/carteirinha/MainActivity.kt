@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -15,6 +16,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerToggle: ActionBarDrawerToggle
+
+    private val navController: NavController by lazy {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(
+                R.id.nav_host_fragment
+            ) as NavHostFragment
+        navHostFragment.navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,17 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configurarNavegacao() {
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(
-                R.id.nav_host_fragment
-            ) as NavHostFragment
-
-        val navController = navHostFragment.navController
-
-        binding.navView.setupWithNavController(
-            navController
-        )
+        binding.navView.setupWithNavController(navController)
     }
 
     private fun aplicarWindowInsets() {
@@ -108,13 +107,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navegarPara(destinationId: Int) {
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(
-                R.id.nav_host_fragment
-            ) as NavHostFragment
-
-        val navController = navHostFragment.navController
 
         val navOptions = NavOptions.Builder()
             .setLaunchSingleTop(true)

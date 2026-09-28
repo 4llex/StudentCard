@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import br.com.inatel.carteirinha.R
 import br.com.inatel.carteirinha.databinding.FragmentValidacaoQrBinding
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
+import com.journeyapps.barcodescanner.DefaultDecoderFactory
 
 class ValidacaoQrFragment : Fragment() {
 
@@ -63,6 +65,7 @@ class ValidacaoQrFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        configurarBotaoLerNovamente()
         iniciarScanner()
     }
 
@@ -70,11 +73,15 @@ class ValidacaoQrFragment : Fragment() {
 
         qrDetectado = false
 
+        binding.cardResultado.visibility = View.GONE
+
+        binding.buttonLerNovamente.visibility = View.GONE
+
         binding.textStatusScanner.text =
             "Aponte a câmera para o QR Code..."
 
         binding.barcodeView.barcodeView.setDecoderFactory(
-            com.journeyapps.barcodescanner.DefaultDecoderFactory(
+            DefaultDecoderFactory(
                 listOf(BarcodeFormat.QR_CODE)
             )
         )
@@ -86,6 +93,14 @@ class ValidacaoQrFragment : Fragment() {
         binding.barcodeView.resume()
     }
 
+    private fun configurarBotaoLerNovamente() {
+
+        binding.buttonLerNovamente.setOnClickListener {
+
+            iniciarScanner()
+        }
+    }
+
     private fun processarQrCode(conteudo: String) {
 
         binding.barcodeView.pause()
@@ -95,30 +110,38 @@ class ValidacaoQrFragment : Fragment() {
         val partes = conteudo.split("|")
 
         if (partes.size != 5) {
-            mostrarQrInvalido()
+
+            mostrarQrInvalido(
+                "O QR Code não possui um formato válido."
+            )
+
             return
         }
 
         val status = partes[0]
 
         val nome = partes[1]
-            .removePrefix("NOME=")
+            .takeIf { it.startsWith("NOME=") }
+            ?.removePrefix("NOME=")
 
         val matricula = partes[2]
-            .removePrefix("RA=")
+            .takeIf { it.startsWith("RA=") }
+            ?.removePrefix("RA=")
 
         val curso = partes[3]
-            .removePrefix("CURSO=")
+            .takeIf { it.startsWith("CURSO=") }
+            ?.removePrefix("CURSO=")
 
         val instituicao = partes[4]
-            .removePrefix("INSTITUICAO=")
+            .takeIf { it.startsWith("INSTITUICAO=") }
+            ?.removePrefix("INSTITUICAO=")
 
         if (
             status == "VALIDO" &&
-            nome.isNotBlank() &&
-            matricula.isNotBlank() &&
-            curso.isNotBlank() &&
-            instituicao.isNotBlank()
+            !nome.isNullOrBlank() &&
+            !matricula.isNullOrBlank() &&
+            !curso.isNullOrBlank() &&
+            !instituicao.isNullOrBlank()
         ) {
 
             mostrarQrValido(
@@ -130,7 +153,9 @@ class ValidacaoQrFragment : Fragment() {
 
         } else {
 
-            mostrarQrInvalido()
+            mostrarQrInvalido(
+                "Os dados da carteirinha não são válidos."
+            )
         }
     }
 
@@ -141,34 +166,62 @@ class ValidacaoQrFragment : Fragment() {
         instituicao: String
     ) {
 
-        binding.textStatusScanner.text =
-            "QR Code validado com sucesso!"
+        binding.imageResultadoIcon.setImageResource(
+            R.drawable.ic_check
+        )
 
         binding.textResultado.text =
             "Carteirinha válida"
 
-        binding.textDadosEstudante.text =
-            """
-        Nome: $nome
-        
-        Matrícula: $matricula
-        
-        Curso: $curso
-        
-        Instituição: $instituicao
-        """.trimIndent()
-    }
-
-    private fun mostrarQrInvalido() {
+        binding.textResultado.setTextColor(
+            requireContext().getColor(
+                R.color.success_green
+            )
+        )
 
         binding.textStatusScanner.text =
-            "Não foi possível validar o QR Code."
+            "QR Code validado com sucesso!"
+
+        binding.textDadosEstudante.text =
+            """
+            Nome: $nome
+            
+            Matrícula: $matricula
+            
+            Curso: $curso
+            
+            Instituição: $instituicao
+            """.trimIndent()
+
+        binding.buttonLerNovamente.visibility =
+            View.GONE
+    }
+
+    private fun mostrarQrInvalido(
+        mensagem: String
+    ) {
+
+        binding.imageResultadoIcon.setImageResource(
+            R.drawable.ic_close
+        )
 
         binding.textResultado.text =
             "Carteirinha inválida"
 
+        binding.textResultado.setTextColor(
+            requireContext().getColor(
+                R.color.error_red
+            )
+        )
+
+        binding.textStatusScanner.text =
+            "Não foi possível validar o QR Code."
+
         binding.textDadosEstudante.text =
-            "O QR Code não possui um formato válido."
+            mensagem
+
+        binding.buttonLerNovamente.visibility =
+            View.VISIBLE
     }
 
     override fun onResume() {
@@ -189,9 +242,13 @@ class ValidacaoQrFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        binding.barcodeView.pause()
+
+        if (_binding != null) {
+            binding.barcodeView.pause()
+        }
 
         super.onDestroyView()
+
         _binding = null
     }
 }

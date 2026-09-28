@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="@color/background_light"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Configurações"
-            android:textColor="@color/inatel_dark_blue"
+            android:textColor="@color/text_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Dados da carteirinha"
+            android:text="Atualize os dados da sua carteirinha"
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 
@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/spacing_medium"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="3dp">
+            app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,14 +48,15 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome completo">
+                    android:hint="Nome">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editNome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords"
-                        android:maxLines="1" />
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="@color/text_primary"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +73,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:textColor="@color/text_primary"/>
+
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,24 +92,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="date"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:textColor="@color/text_primary" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Curso -->
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutCurso"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:hint="Curso">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
                         android:id="@+id/editCurso"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords"
-                        android:maxLines="1" />
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:textColor="@color/text_primary"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,42 +129,31 @@
                         android:id="@+id/editInstituicao"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"
-                        android:maxLines="1" />
+                        android:enabled="true"
+                        android:focusable="false"
+                        android:clickable="false"
+                        android:text="INATEL"
+                        android:textColor="@color/text_primary" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Nível de ensino -->
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNivelEnsino"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:hint="Nível de ensino">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
                         android:id="@+id/editNivelEnsino"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapWords"
-                        android:maxLines="1" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- Validade -->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_medium"
-                    android:hint="Validade">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editValidade"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="date"
-                        android:maxLines="1" />
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:textColor="@color/text_primary" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,8 +164,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
-                    android:text="Salvar alterações"
-                    android:textAllCaps="false"
+                    android:text="Salvar"
+                    android:textSize="16sp"
                     app:cornerRadius="12dp" />
 
             </LinearLayout>

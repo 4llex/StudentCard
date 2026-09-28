@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.drawer_configuracoes -> {
-                    // Futuramente.
+                    navegarPara(R.id.navigation_configuracoes)
                 }
 
                 R.id.drawer_sobre -> {

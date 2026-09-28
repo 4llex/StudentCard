@@ -29,4 +29,10 @@
         android:label="Validar QR Code"
         tools:layout="@layout/fragment_validacao_qr" />
 
+    <fragment
+        android:id="@+id/navigation_configuracoes"
+        android:name="br.com.inatel.carteirinha.ui.configuracoes.ConfiguracoesFragment"
+        android:label="Configurações"
+        tools:layout="@layout/fragment_configuracoes" />
+
 </navigation>

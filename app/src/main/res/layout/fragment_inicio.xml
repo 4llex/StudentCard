@@ -130,19 +130,26 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="Grade curricular"
+                        android:src="@drawable/ic_grade"
+                        app:tint="@color/inatel_blue" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="Grade"
-                        android:textColor="@color/inatel_blue"
-                        android:textSize="17sp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:gravity="center"
+                        android:layout_marginTop="2dp"
                         android:text="Curricular"
                         android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
@@ -172,18 +179,26 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="Validar QR Code"
+                        android:src="@drawable/ic_qr_code"
+                        app:tint="@color/inatel_blue" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="Validar"
-                        android:textColor="@color/inatel_blue"
-                        android:textSize="17sp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="2dp"
                         android:text="QR Code"
                         android:textColor="@color/text_secondary"
                         android:textSize="13sp" />

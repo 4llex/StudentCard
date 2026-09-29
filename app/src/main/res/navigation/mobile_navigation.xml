@@ -35,4 +35,10 @@
         android:label="Configurações"
         tools:layout="@layout/fragment_configuracoes" />
 
+    <fragment
+        android:id="@+id/navigation_sobre"
+        android:name="br.com.inatel.carteirinha.ui.sobre.SobreFragment"
+        android:label="Sobre"
+        tools:layout="@layout/fragment_sobre" />
+
 </navigation>

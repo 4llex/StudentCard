@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -15,6 +16,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import android.view.inputmethod.EditorInfo
+import android.content.Context
 
 class ConfiguracoesFragment : Fragment() {
 
@@ -334,13 +337,35 @@ class ConfiguracoesFragment : Fragment() {
     }
 
     private fun configurarDataNascimento() {
-
         binding.editDataNascimento.setOnFocusChangeListener { _, ganhouFoco ->
-
             if (!ganhouFoco) {
                 formatarDataNascimento()
             } else {
                 binding.editDataNascimento.error = null
+            }
+        }
+
+        binding.editDataNascimento.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                formatarDataNascimento()
+
+                // Remove o foco do campo
+                binding.editDataNascimento.clearFocus()
+
+                // Fecha o teclado virtual
+                val inputMethodManager =
+                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE)
+                            as InputMethodManager
+
+                inputMethodManager.hideSoftInputFromWindow(
+                    binding.editDataNascimento.windowToken,
+                    0
+                )
+
+                true
+            } else {
+                false
             }
         }
     }

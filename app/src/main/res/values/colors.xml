@@ -15,6 +15,7 @@
 
     <!-- Cores auxiliares -->
     <color name="white">#FFFFFF</color>
+    <color name="drawer_selected_bg">#E8F0FE</color>
 
     <color name="success_green">#2E7D32</color>
     <color name="error_red">#C62828</color>

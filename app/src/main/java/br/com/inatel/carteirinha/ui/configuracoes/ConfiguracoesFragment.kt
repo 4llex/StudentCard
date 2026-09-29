@@ -18,6 +18,8 @@ import java.util.Calendar
 import java.util.Locale
 import android.view.inputmethod.EditorInfo
 import android.content.Context
+import android.widget.Filter
+import android.widget.Filterable
 
 class ConfiguracoesFragment : Fragment() {
 
@@ -70,14 +72,13 @@ class ConfiguracoesFragment : Fragment() {
     }
 
     private fun configurarPicklistCursos() {
-
-        val adapter = ArrayAdapter(
+        val adapter = ListaCompletaAdapter(
             requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
             cursos
         )
 
         binding.editCurso.setAdapter(adapter)
+        binding.editCurso.threshold = 0
 
         binding.editCurso.setOnClickListener {
             binding.editCurso.error = null
@@ -86,14 +87,13 @@ class ConfiguracoesFragment : Fragment() {
     }
 
     private fun configurarPicklistNivelEnsino() {
-
-        val adapter = ArrayAdapter(
+        val adapter = ListaCompletaAdapter(
             requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
             niveisEnsino
         )
 
         binding.editNivelEnsino.setAdapter(adapter)
+        binding.editNivelEnsino.threshold = 0
 
         binding.editNivelEnsino.setOnClickListener {
             binding.editNivelEnsino.error = null
@@ -306,6 +306,37 @@ class ConfiguracoesFragment : Fragment() {
     private fun mostrarErroNivelEnsino(mensagem: String) {
         binding.editNivelEnsino.error = mensagem
         binding.editNivelEnsino.requestFocus()
+    }
+
+    private class ListaCompletaAdapter(
+        context: Context,
+        private val itens: List<String>
+    ) : ArrayAdapter<String>(
+        context,
+        android.R.layout.simple_dropdown_item_1line,
+        itens
+    ), Filterable {
+
+        private val filtro = object : Filter() {
+
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                return FilterResults().apply {
+                    values = itens
+                    count = itens.size
+                }
+            }
+
+            override fun publishResults(
+                constraint: CharSequence?,
+                results: FilterResults?
+            ) {
+                notifyDataSetChanged()
+            }
+        }
+
+        override fun getFilter(): Filter {
+            return filtro
+        }
     }
 
     override fun onDestroyView() {

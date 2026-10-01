@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.CarteirinhaInatel" parent="Base.Theme.CarteirinhaInatel" />
+
+    <!-- Adicione o 'parent' conforme abaixo para herdar o formato original -->
+    <style name="MeuIndicadorCustomizado" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <!-- Aqui a sua cor vermelha vai funcionar e a pílula não sumirá -->
+        <!-- Aqui define a cor quando icon do botton_nav é selecionado -->
+        <item name="android:color">@color/menu_icon_selected_bg</item>
+    </style>
 </resources>

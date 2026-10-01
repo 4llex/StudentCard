@@ -45,22 +45,20 @@
 
 
         <!-- Navegação inferior -->
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="@color/white"
             app:itemIconTint="@color/bottom_nav_color"
             app:itemTextColor="@color/bottom_nav_color"
-            app:labelVisibilityMode="labeled"
+            app:itemActiveIndicatorStyle="@style/MeuIndicadorCustomizado"
             app:menu="@menu/bottom_nav_menu" />
 
     </LinearLayout>
 
 
     <!-- Menu lateral -->
-
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="300dp"
